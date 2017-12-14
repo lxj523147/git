@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ws.dao.EmpMapper">
+    <resultMap type="emp" id="empMap">
+        <id property="eid" column="eid" />
+		<result property="ename" />
+		<result property="deptid" column="did"/>
+		<result property="dname" column="dname"/>
+		<result property="age" />
+		<result property="gender"/>
+		<result property="workDate"/>
+    </resultMap>
+
+   <select id="getEmpAll" resultMap="empMap">
+     select e.*,d.* from tb_emp e,tb_dept d where e.deptid=d.did order by  e.eid desc
+   </select>
+   
+   <select id="getDeptAll" resultType="dept">
+     select * from tb_dept
+   </select>
+   
+   <insert id="addEmp" parameterType="emp">
+     insert into tb_emp(ename,deptid,age,gender,workDate) values (#{ename},#{deptid},#{age},#{gender},#{workDate})
+   </insert>
+   
+   <delete id="delEmp" parameterType="emp">
+     delete from tb_emp where eid=#{eid}
+   </delete>
+   
+   <select id="getEmpById" parameterType="emp" resultType="emp">
+    select * from tb_emp where eid=#{eid}
+   </select>
+
+   <update id="upEmp" parameterType="emp">
+     update tb_emp set ename=#{ename},deptid=#{deptid},age=#{age},gender=#{gender},workDate=#{workDate} where eid=#{eid}
+   </update>
+</mapper>
